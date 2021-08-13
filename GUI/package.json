@@ -25,7 +25,9 @@
     "@electron-forge/maker-rpm": "^6.0.0-beta.59",
     "@electron-forge/maker-squirrel": "^6.0.0-beta.59",
     "@electron-forge/maker-zip": "^6.0.0-beta.59",
-    "electron": "^13.1.9"
+    "electron": "^13.1.9",
+    "ice": "^3.7.60",
+    "slice2js": "^3.7.6"
   },
   "dependencies": {
     "electron-squirrel-startup": "^1.0.0"
