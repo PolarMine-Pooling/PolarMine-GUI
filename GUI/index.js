@@ -10,7 +10,7 @@ function createWindow () {
     }
   })
 
-  mainWindow.loadFile('index.html')
+  mainWindow.loadFile('polarmine-gui.html')
 }
 
 app.whenReady().then(() => {
