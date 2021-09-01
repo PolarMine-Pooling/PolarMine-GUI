@@ -1,5 +1,6 @@
 const { app, BrowserWindow } = require('electron')
 const path = require('path')
+const RPC = require("./Client");
 
 function createWindow () {
   const mainWindow = new BrowserWindow({
@@ -11,6 +12,23 @@ function createWindow () {
   })
 
   mainWindow.loadFile('polarmine-gui.html')
+
+  (async () => {
+    const stat = await RPC.StatsPRC('xchStatus');
+
+    await console.log(stat);
+  });
+/*
+  (async () => {
+    const xchStatus = await StatsRPC('xchStatus'); //BUG return false
+    const hddStatus = await StatsRPC('hddStatus'); //OKG
+
+    ipcMain.on("toMain", (event, args) => {
+      mainWindow.webContents.send("fromMain", '2ST:'+hddStatus);
+      mainWindow.webContents.send("fromMain1", '3S:'+xchStatus);
+    });
+  })()
+*/
 }
 
 app.whenReady().then(() => {

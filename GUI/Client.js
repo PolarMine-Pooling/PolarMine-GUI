@@ -3,19 +3,20 @@ const Client = require("./generated/RPC").Client;
 
 async function StatsRPC(endpoint) {
     let communicator;
+    let res;
     try {
         communicator = Ice.initialize();
         const base = communicator.stringToProxy("stats:default -p 10000"); /* TODO: make not hard coded value */
         const Stats = await Client.StatsPrx.checkedCast(base);
         if(Stats) {
-            if      (endpoint == "xchStatus") await Stats.xch();
-            else if (endpoint == "hddStatus") await Stats.hdd();
-            else if (endpoint == "active")    await Stats.active();
-            else if (endpoint == "xchPC")     await Stats.XCHpc();
-            else if (endpoint == "hddPC")     await Stats.HDDpc();
-            else if (endpoint == "xchConfig") await Stats.CheckXCHConfigPath();
-            else if (endpoint == "hddConfig") await Stats.CheckHDDConfigPath();
-            else if (endpoint == "token")     await Stats.CheckToken();
+            if      (endpoint == "xchStatus") res = await Stats.xch();
+            else if (endpoint == "hddStatus") res = await Stats.hdd();
+            else if (endpoint == "active")    res = await Stats.active();
+            else if (endpoint == "xchPC")     res = await Stats.XCHpc();
+            else if (endpoint == "hddPC")     res = await Stats.HDDpc();
+            else if (endpoint == "xchConfig") res = await Stats.CheckXCHConfigPath();
+            else if (endpoint == "hddConfig") res = await Stats.CheckHDDConfigPath();
+            else if (endpoint == "token")     res = await Stats.CheckToken();
             else console.log("Invalid endpoint");
         }
         else console.log("Invalid Proxy");
@@ -29,6 +30,7 @@ async function StatsRPC(endpoint) {
             await communicator.destroy();
         }
     }
+    return res;
 }
 
 async function UpdateRPC(endpoint, args) {
@@ -58,6 +60,38 @@ async function UpdateRPC(endpoint, args) {
         }
     }
 }
+
+let test;
+
+async function Main() {
+    test = await StatsRPC('xchStatus');
+    await console.log('xchStatus:',test);
+
+    test = await StatsRPC('hddStatus');
+    await console.log('hddStatus:',test);
+
+    test = await StatsRPC('active');
+    await console.log('active:',test);
+
+    test = await StatsRPC('xchPC');
+    await console.log('xchPC:',test);
+
+    test = await StatsRPC('hddPC');
+    await console.log('hddPC:',test);
+
+    test = await StatsRPC('xchConfig');
+    await console.log('xchConfig:',test);
+
+    test = await StatsRPC('hddConfig');
+    await console.log('hddConfig:',test);
+
+    test = await StatsRPC('token');
+    await console.log('token:',test);
+}
+
+
+Main();
+
 
 /*******
  * 
